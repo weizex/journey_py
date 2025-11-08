@@ -9,9 +9,11 @@ from typing import Any
 callable 本质上是类型提示， 不是实际的对象
 起到一个函数签名检查的作用，用它来:一个对象的类型，就可以对对象进行参数检查
 '''
+EVENT_TIMER = "eTimer"
+
 
 class Event:
-    def _init_(self, type: str, data: Any = None):
+    def __init__(self, type: str, data: Any = None):
         self.type = type
         self.data = data
 

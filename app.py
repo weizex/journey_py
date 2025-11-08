@@ -1,22 +1,18 @@
-from PySide6 import QtGui, QtWidgets, QtCore
-import sys
-import qdarkstyle
-from .setting import SETTINGS
+from abc import ABC
+from pathlib import Path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .engine import BaseEngine
 
 
-'''
-qt signal and slot:
-1. all events came from xserver were put into event queue.
-2. main thread repeated deal with all events.
-3. click() are called, emit a signal, which is dealt within the thread or
-sent to working thread. all information needed to perform the slot is bound 
-to signal with connect() method.
-
-'''
-
-def main():
-    qapp: QtWidgets.QApplication = QtWidgets.QApplication(sys.argv)
-    qapp.setStyleSheet(qdarkstyle.load_stylesheet(qt_api="pyside6"))
-    font: QtGui.QFont = QtGui.QFont(SETTINGS["font.family"], SETTINGS["font.size"])
-    qapp.setFont(font)
-
+class BaseApp(ABC):
+    app_name: str
+    app_module: str
+    app_path: Path
+    display_name: str
+    engine_class: type["BaseEngine"]
+    #理解这种type机制也很简单，type本身是一种对象，叫类对象，也就是说，定义的类本身（不是其实例），
+    #也是一个实例对象，这个实例对应的类是类的类，也即type
+    widget_name: str
+    icon_name: str
